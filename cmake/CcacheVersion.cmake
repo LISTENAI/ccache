@@ -25,7 +25,10 @@
 set(version_info "$Format:%H %D$")
 set(CCACHE_VERSION "unknown")
 
-if(version_info MATCHES "^([0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f])[0-9a-f]* (.*)")
+if(($ENV{GITHUB_REF} MATCHES "^refs\\\/tags\\\/v") AND (NOT $ENV{GITHUB_REF_NAME} STREQUAL ""))
+  set(CCACHE_VERSION_ORIGIN archive)
+  set(CCACHE_VERSION $ENV{GITHUB_REF_NAME})
+elseif(version_info MATCHES "^([0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f][0-9a-f])[0-9a-f]* (.*)")
   # Scenario 1.
   set(CCACHE_VERSION_ORIGIN archive)
 
